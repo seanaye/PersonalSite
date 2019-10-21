@@ -7,7 +7,7 @@
         cols="12"
         sm="6"
         lg="4"
-        @click="$router.push(`/photo/${album.title}`)"
+        @click="$router.push(`/photo/${album.link}`)"
       >
         <client-only>
           <v-hover v-slot:default="{ hover }">
@@ -36,12 +36,12 @@ export default {
   data () {
     return {
       albums: [
-        { title: 'Iceland', src: 'Iceland/Iceland-15.jpg' },
-        { title: 'Portugal', src: 'Portugal/Portugal-6.jpg' },
-        { title: 'Zion', src: 'Zion/Zion-13.jpg' },
-        { title: 'Winter2019', src: 'Winter2019/Winter2019-3.jpg' },
-        { title: 'Roadtrip2019', src: 'Roadtrip2019/Roadtrip2019-19.jpg' },
-        { title: 'Jasper', src: 'Jasper/Jasper-6.jpg' }
+        { title: 'Iceland', src: 'iceland/Iceland-15.jpg', link: 'iceland' },
+        { title: 'Portugal', src: 'portugal/Portugal-6.jpg', link: 'portugal' },
+        { title: 'Zion', src: 'zion/Zion-13.jpg', link: 'zion' },
+        { title: 'Winter 2019', src: 'winter2019/Winter2019-3.jpg', link: 'winter2019' },
+        { title: 'Roadtrip 2019', src: 'roadtrip/Roadtrip2019-19.jpg', link: 'roadtrip' },
+        { title: 'Jasper', src: 'jasper/Jasper-6.jpg', link: 'jasper' }
       ]
     }
   },
