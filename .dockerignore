@@ -1,4 +1,4 @@
 Dockerfile
 dist
 .nuxt
-
+node_modules

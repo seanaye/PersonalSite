@@ -53,7 +53,6 @@ export default {
   */
   plugins: [
     { src: '~/plugins/VueMasonry', ssr: false },
-    { src: '~/plugins/vue-observe-visibility', ssr: false }
   ],
   /*
   ** Nuxt.js modules

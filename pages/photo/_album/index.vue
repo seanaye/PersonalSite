@@ -3,7 +3,7 @@
     <client-only>
       <masonry :cols="{ default: 3, 800: 2, 400: 1 }" gutter="10px">
         <template v-for="img in images">
-          <vLazyImage :key="img" :src="img" actions />
+          <lazySkeleton :key="img" :src="require(`~/assets/img/${img}`)" actions />
         </template>
       </masonry>
     </client-only>
@@ -11,11 +11,11 @@
 </template>
 
 <script>
-import vLazyImage from '~/components/v-lazy-image'
+import lazySkeleton from '~/components/lazy-skeleton'
 
 export default {
   components: {
-    vLazyImage
+    lazySkeleton
   },
   computed: {
     images () {

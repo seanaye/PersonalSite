@@ -17,6 +17,7 @@
     "lodash.debounce": "^4.0.8",
     "nuxt": "^2.0.0",
     "three": "^0.107.0",
+    "vue-masonry": "^0.11.8",
     "vue-masonry-css": "^1.0.3",
     "vue-observe-visibility": "^0.4.4",
     "vue-parallaxy": "^1.1.1",
