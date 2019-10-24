@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <client-only>
-      <masonry :cols="{ default: 3, 800: 2, 400: 1 }" gutter="10px">
+      <masonry :cols="{ default: 3, 800: 2, 400: 1 }">
         <template v-for="img in images">
           <lazySkeleton :key="img" :src="require(`~/assets/img/${img}`)" actions />
         </template>
