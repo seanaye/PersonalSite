@@ -3,19 +3,22 @@
     <v-container fluid style="height:100vh; padding: 0px;">
       <v-layout row fill-height>
         <v-flex xs12>
-          <client-only>
-            <parallax v-observe-visibility="visChange" fixed :section-height="100">
-              <appcanvas ref="canvas" class="xs12" />
-              <span id="scroll" />
-            </parallax>
-          </client-only>
+          <parallax v-observe-visibility="visChange" fixed :section-height="100">
+            <appcanvas ref="canvas" class="xs12" />
+            <span id="scroll" />
+          </parallax>
         </v-flex>
       </v-layout>
     </v-container>
-    <v-sheet color="black" style="width: 100vw;">
-      <v-container>
-        <v-layout justify-center fill-height>
-          <v-flex xs12 sm10 md8 xl6>
+    <v-card>
+      <v-container fluid>
+        <v-row justify="center">
+          <v-col
+            cols="12"
+            sm="10"
+            md="8"
+            xl="6"
+          >
             <v-card>
               <v-card-title>
                 About
@@ -26,48 +29,56 @@
                 </span>
               </v-card-text>
             </v-card>
-          </v-flex>
-        </v-layout>
+          </v-col>
+        </v-row>
       </v-container>
       <v-container>
-        <client-only>
           <masonry :cols="{ default: 4, 800: 2, 520: 1, 1300: 3 }" gutter="10px">
-            <template v-for="img in list">
-              <vLazyImage :key="img" :src="img" actions />
-            </template>
+            <lazySkeleton
+              v-for="img in list"
+              :key="img"
+              :src="require(`~/assets/img/${img}`)"
+            />
           </masonry>
-        </client-only>
       </v-container>
       <v-container>
-        <v-layout justify-center fill-height>
-          <v-flex xs12 sm10 md8 xl6>
-            <v-card>
+        <v-row justify="center">
+          <v-col
+            cols="12"
+            sm="10"
+            md="8"
+            xl="6"
+          >
+            <v-card class="pb-5">
               <v-card-title>
-                <a class="highlight" @click="$router.push('/photo')">More Photos</a>
+                Support
               </v-card-title>
-              <!-- <v-card-text>
-                <span id="smallfont">
-                  Check out <a @click="$router.push('/photo')" class="highlight">more photos</a> or consider <a @click="$router.push('/payment')" class="highlight">donating</a> if you would like to support what I do.
-                </span>
-              </v-card-text> -->
+              <v-card-text>
+                If you enjoy what I do please consider checking out
+                <a class="highlight" @click="$router.push('/photo')">more photos.</a>
+                You can also help me out by giving a
+                <a class="highlight" @click="$router.push('/payment')">small dontaion</a>
+                 or
+                <a href="mailto://sean.aye2@gmail.com" class="highlight">emailing me.</a>
+              </v-card-text>
             </v-card>
-          </v-flex>
-        </v-layout>
+          </v-col>
+        </v-row>
       </v-container>
-    </v-sheet>
+    </v-card>
   </div>
 </template>
 
 <script>
 import Parallax from 'vue-parallaxy'
 import appcanvas from '~/components/appcanvas'
-import vLazyImage from '~/components/v-lazy-image'
+import lazySkeleton from '~/components/lazy-skeleton'
 
 export default {
   components: {
     Parallax,
     appcanvas,
-    vLazyImage
+    lazySkeleton
   },
   data () {
     return {

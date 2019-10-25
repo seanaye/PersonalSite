@@ -1,6 +1,7 @@
 
 import colors from 'vuetify/es5/util/colors'
 import gallery from './gallery.json'
+import { VuetifyProgressiveModule } from 'vuetify-loader'
 
 export default {
   mode: 'spa',
@@ -53,6 +54,7 @@ export default {
   */
   plugins: [
     { src: '~/plugins/VueMasonry', ssr: false },
+    { src: '~/plugins/VueObserveVisibility', ssr: false}
   ],
   /*
   ** Nuxt.js modules
@@ -93,6 +95,7 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+
     }
   }
 }

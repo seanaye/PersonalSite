@@ -2,14 +2,14 @@
   <v-card>
     <v-card-text class="lim-padding">
       <v-skeleton-loader
-        :loading="!intersected"
+        :loading="loading"
         transition="fade"
         type="image"
       >
         <v-img
+          eager
           :src="src"
           @click="fullscreen"
-          @load="log"
         >
           <template v-slot:placeholder>
             <v-row
@@ -33,15 +33,13 @@ export default {
   data () {
     return {
       intersected: false,
-      observer: null
+      observer: null,
+      loading: true
     }
   },
   methods: {
     fullscreen () {
       window.open(this.src, '_newtab')
-    },
-    log (event) {
-      console.log(event)
     }
   },
   mounted () {
@@ -49,7 +47,12 @@ export default {
       const image = entries[0]
       if (image.isIntersecting) {
         this.intersected = true
-        console.log('intersected')
+        const newImg = new Image()
+        const that = this
+        newImg.onload = function () {
+          that.loading = false
+        }
+        newImg.src = this.src
         this.observer.disconnect()
       }
     })
