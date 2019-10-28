@@ -166,6 +166,9 @@ export default {
     validAmount (int) {
       return (int > 0) ? true : 'Enter an amount higher than 0'
     }
+  },
+  mounted () {
+    this.validateIntent()
   }
 }
 </script>
