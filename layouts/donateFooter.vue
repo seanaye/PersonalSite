@@ -20,6 +20,13 @@
     <v-content style="width: 100vw;">
       <nuxt />
     </v-content>
+    <v-footer app fixed="">
+      If you enjoy my work and would like to support me,
+      <a class="highlight" @click="$router.push('/payment')">
+        &nbsp; please consider donating
+      </a>
+      .
+    </v-footer>
   </v-app>
 </template>
 

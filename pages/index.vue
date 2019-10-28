@@ -10,7 +10,7 @@
         </v-flex>
       </v-layout>
     </v-container>
-    <v-card>
+    <v-card color="black">
       <v-container fluid>
         <v-row justify="center">
           <v-col
@@ -19,7 +19,7 @@
             md="8"
             xl="6"
           >
-            <v-card>
+            <v-card color="grey darken-4">
               <v-card-title>
                 About
               </v-card-title>
@@ -49,7 +49,7 @@
             md="8"
             xl="6"
           >
-            <v-card class="pb-5">
+            <v-card class="pb-5" color="grey darken-4">
               <v-card-title>
                 Support
               </v-card-title>

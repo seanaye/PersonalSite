@@ -69,5 +69,6 @@ export default {
 <style scoped>
 .lim-padding {
   padding: 8px !important;
+  background-color: black;
 }
 </style>

@@ -9,7 +9,7 @@ export default {
   name: 'AppCanvas',
   data () {
     return {
-      damping: 0.98,
+      damping: 0.95,
       anim: null,
       w: 0,
       h: 0

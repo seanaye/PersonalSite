@@ -9,22 +9,20 @@
         lg="4"
         @click="$router.push(`/photo/${album.link}`)"
       >
-        <client-only>
-          <v-hover v-slot:default="{ hover }">
-            <v-img
-              :src="require(`~/assets/img/${album.src}`)"
-              :lazy-src="require(`~/assets/img/${album.src}`)"
-              :float-name="album.title"
-              style="margin-top: 10px; margin-bottom: 10px;"
-            >
-              <v-expand-transition>
-                <v-overlay v-if="!hover" absolute style="opacity: 0.4;">
-                  <h1>{{ album.title }}</h1>
-                </v-overlay>
-              </v-expand-transition>
-            </v-img>
-          </v-hover>
-        </client-only>
+        <v-hover v-slot:default="{ hover }">
+          <v-img
+            :src="require(`~/assets/img/${album.src}`)"
+            :lazy-src="require(`~/assets/img/${album.src}`)"
+            :float-name="album.title"
+            style="margin-top: 10px; margin-bottom: 10px;"
+          >
+            <v-expand-transition>
+              <v-overlay v-if="!hover" absolute style="opacity: 0.4;">
+                <h1>{{ album.title }}</h1>
+              </v-overlay>
+            </v-expand-transition>
+          </v-img>
+        </v-hover>
       </v-col>
     </v-row>
   </v-container>

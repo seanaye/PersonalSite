@@ -6,7 +6,9 @@ import { VuetifyProgressiveModule } from 'vuetify-loader'
 export default {
   mode: 'spa',
   env: {
-    gallery
+    gallery,
+    stripeKey: (process.env.NODE_ENV === 'development') ? 'pk_test_ZYQ2ez0gTwY07wlAbgZKCMKN00h2HcUXd3' : 'pk_live_XK9H5h8sWxjpCyhAFMhUbVEj00jFVTeG5C',
+    APIEndpoint: 'https://mc.seanaye.ca/graphql/'
   },
   generate: {
     routes: gallery.map((elem) => {
