@@ -169,6 +169,18 @@ export default {
   },
   mounted () {
     this.validateIntent()
+  },
+  watch: {
+    amount () {
+      if (this.paymentReqObj && this.amount > 0) {
+        this.paymentReqObj.update({
+          total: {
+            amount: this.amount * 100,
+            label: 'Donation Amount'
+          }
+        })
+      }
+    }
   }
 }
 </script>
