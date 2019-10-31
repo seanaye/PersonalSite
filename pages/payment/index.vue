@@ -1,11 +1,4 @@
 <template>
-  <!-- <card
-    class="stripe-card"
-    :class="{ complete }"
-    stripe="pk_test_XXXXXXXXXXXXXXXXXXXXXXXX"
-    :options="stripeOptions"
-    @change="complete = $event.complete"
-  /> -->
   <v-container>
     <v-row justify="center">
       <v-col
@@ -62,7 +55,7 @@
                           }
                         }
                       }"
-                      :amount="amount"
+                      :amount="Number(amount)"
                     />
                   </v-tab-item>
                   <v-tab-item
@@ -70,14 +63,7 @@
                     background-color="grey darken-4"
                     style="margin-top: 20px;"
                   >
-                    <PaymentRequestButton
-                      v-if="canMakePayment"
-                      :options="{ paymentRequest: paymentReqObj }"
-                    >
-                    </PaymentRequestButton>
-                    <div v-else>
-                      Your browser does not have a supported payment method saved.
-                    </div>
+                    <BrowserPayment :value="Number(amount)"></BrowserPayment>
                   </v-tab-item>
                   <v-tab-item key="2">
                     <div style="margin-top: 10px; margin-bottom: 10px;">
@@ -101,85 +87,23 @@
 </template>
 
 <script>
-import { paymentRequest } from 'vue-stripe-elements-plus'
-import PaymentRequestButton from '~/components/PaymentRequestButton'
 import CardPayment from '~/components/CardPayment'
+import BrowserPayment from '~/components/BrowserPayment'
 
 export default {
   components: {
-    PaymentRequestButton,
-    CardPayment
+    CardPayment,
+    BrowserPayment
   },
   data () {
     return {
       paymentMethod: 0,
-      amount: 5,
-      paymentReqObj: null,
-      canMakePayment: null
+      amount: 5
     }
   },
   methods: {
-    async validateIntent () {
-      const req = paymentRequest({
-        country: 'CA',
-        currency: 'usd',
-        total: {
-          amount: this.amount * 100,
-          label: 'Donation Amount'
-        },
-        requestPayerName: true,
-        requestPayerEmail: true
-      }).on('token', async (obj) => {
-        console.log(obj)
-        const r = await this.$axios.post(this.$root.context.env.APIEndpoint, {
-          query: `mutation donation(
-            $token: String!
-            $name: String!
-            $amount: Int!
-            $live: Boolean!
-          ) {
-            payment (
-              token: $token
-              name: $name
-              amount: $amount
-              desc: "MC SERVER DONATION"
-              live: $live
-            )
-          }`,
-          variables: {
-            token: obj.token.id,
-            name: obj.payerName,
-            amount: this.amount * 100,
-            live: obj.token.livemode
-          }
-        })
-        if (!r.data.errors) {
-          obj.complete('success')
-        } else {
-          obj.complete('fail')
-        }
-      })
-      this.canMakePayment = await req.canMakePayment()
-      this.paymentReqObj = req
-      console.log('intent')
-    },
     validAmount (int) {
       return (int > 0) ? true : 'Enter an amount higher than 0'
-    }
-  },
-  mounted () {
-    this.validateIntent()
-  },
-  watch: {
-    amount () {
-      if (this.paymentReqObj && this.amount > 0) {
-        this.paymentReqObj.update({
-          total: {
-            amount: this.amount * 100,
-            label: 'Donation Amount'
-          }
-        })
-      }
     }
   }
 }

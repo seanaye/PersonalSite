@@ -1,13 +1,19 @@
 <template>
   <v-row>
+    <ProcessingModal
+      v-if="showOverlay"
+      :message="status"
+      :complete="complete"
+      :success="success"
+      :timeout="1000"
+    ></ProcessingModal>
     <v-col cols="12">
       <card
         ref="card"
         class="stripe-card"
-        :class="{ complete }"
         :stripe="$root.context.env.stripeKey"
         :options="options"
-        @change="complete = $event.complete"
+        @change="validCard = $event.complete"
       />
     </v-col>
     <v-col cols="12" xs="12" md="6">
@@ -24,10 +30,12 @@
 </template>
 <script>
 import { Card, createToken } from 'vue-stripe-elements-plus'
+import ProcessingModal from '~/components/ProcessingModal'
 
 export default {
   components: {
-    Card
+    Card,
+    ProcessingModal
   },
   props: {
     options: Object,
@@ -35,24 +43,36 @@ export default {
   },
   data () {
     return {
-      paymentComplete: false,
-      complete: false
+      complete: false,
+      success: false,
+      validCard: false,
+      showOverlay: false,
+      status: ''
     }
   },
   methods: {
     async pay () {
+      this.showOverlay = true
+      this.status = 'Requesting payment token'
       console.log('start')
       let t = ''
       try {
         t = await createToken()
         console.log(t)
       } catch (err) {
+        this.complete = true
+        this.success = false
+        this.status = 'Failed to create payment token'
         console.log(err)
         return
       }
       if (t.error) {
-        this.$emit('error')
+        this.complete = true
+        this.success = false
+        this.status = 'Received an invalid payment token'
+        console.log(t.error)
       } else {
+        this.status = 'Processing payment token'
         const r = await this.$axios.post(this.$root.context.env.APIEndpoint, {
           query: `mutation donation(
             $token: String!
@@ -78,25 +98,29 @@ export default {
         const stripeResp = JSON.parse(r.data.data.payment)
         console.log(stripeResp)
         if (r.data.errors || !stripeResp.paid) {
-          this.$emit('error')
+          this.complete = true
+          this.success = false
+          this.status = 'Failed to process payment'
         } else {
-          this.$emit('success')
+          this.complete = true
+          this.success = true
+          this.status = 'Payment complete!'
         }
       }
     }
   },
   computed: {
     btnColour () {
-      if (this.paymentError) {
+      if (this.complete && !this.success) {
         return 'error'
-      } else if (this.paymentComplete) {
+      } else if (this.complete && this.success) {
         return 'success'
       } else {
         return 'primary'
       }
     },
     btnDisabled () {
-      return !this.complete || this.paymentComplete || !(this.amount)
+      return !this.validCard || this.complete || !(this.amount)
     }
   }
 }

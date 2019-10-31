@@ -25,7 +25,7 @@
               </v-card-title>
               <v-card-text>
                 <span id="smallfont">
-                  My name is Sean Aye, I'm a photographer, web developer, and student at the University of Waterloo. I'm looking for freelance photo and or video work. If you are interested in portraits, photo prints, promotional videos, or just want to get in touch, email me at <a href="mailto:contact@seanaye.ca" class="highlight">contact@seanaye.ca</a>
+                  My name is Sean Aye, I'm a photographer, web developer, and student at the University of Waterloo. I'm looking for freelance photo and or video work. If you are interested in portraits, photo prints, promotional videos, or just want to get in touch, feel free to <a href="mailto:sean.aye2@gmail.com" class="highlight">email me</a>
                 </span>
               </v-card-text>
             </v-card>
@@ -38,34 +38,26 @@
               v-for="img in list"
               :key="img"
               :src="require(`~/assets/img/${img}`)"
+              @load="increment"
             />
           </masonry>
       </v-container>
-      <v-container>
-        <v-row justify="center">
-          <v-col
-            cols="12"
-            sm="10"
-            md="8"
-            xl="6"
-          >
-            <v-card class="pb-5" color="grey darken-4">
-              <v-card-title>
-                Support
-              </v-card-title>
-              <v-card-text>
-                If you enjoy what I do please consider checking out
-                <a class="highlight" @click="$router.push('/photo')">more photos.</a>
-                You can also help me out by giving a
-                <a class="highlight" @click="$router.push('/payment')">small dontaion</a>
-                 or
-                <a href="mailto://sean.aye2@gmail.com" class="highlight">emailing me.</a>
-              </v-card-text>
-            </v-card>
-          </v-col>
-        </v-row>
-      </v-container>
     </v-card>
+    <transition name="fade">
+      <v-btn
+        v-if="showTooltip"
+        color="grey darken-4"
+        fixed
+        bottom
+        right
+        v-model="showTooltip"
+        elevation="24"
+        style="margin-bottom: 20px;"
+        @click="$router.push('/photo')"
+      >
+        View More
+      </v-btn>
+    </transition>
   </div>
 </template>
 
@@ -80,17 +72,24 @@ export default {
     appcanvas,
     lazySkeleton
   },
+  transitions: {
+    name: 'fade',
+    mode: 'out-in'
+  },
   data () {
     return {
-      vis: true
+      vis: true,
+      loaded: 0,
+      list: [],
+      showTooltip: false
     }
   },
+  created () {
+    this.getList()
+  },
   computed: {
-    list () {
-      const folder = this.$root.context.env.gallery.filter((elem) => {
-        return elem.title === 'cover'
-      })
-      return folder[0].photos.map(path => `cover/${path}`)
+    loadedAll () {
+      return this.list.length > 0 && this.list.length === this.loaded
     }
   },
   watch: {
@@ -102,11 +101,28 @@ export default {
         console.log('stopped')
         this.$refs.canvas.stop()
       }
+    },
+    loadedAll () {
+      if (this.loadedAll) {
+        this.showTooltip = true
+        setTimeout(() => {
+          this.showTooltip = false
+        }, 10000)
+      }
     }
   },
   methods: {
     visChange (event) {
       this.vis = event
+    },
+    increment () {
+      this.loaded += 1
+    },
+    getList () {
+      const folder = this.$root.context.env.gallery.filter((elem) => {
+        return elem.title === 'cover'
+      })
+      this.list = folder[0].photos.map(path => `cover/${path}`)
     }
   }
 }
@@ -126,6 +142,21 @@ export default {
   transform: rotate(-45deg);
   -webkit-animation: sdb05 3s infinite;
   animation: sdb05 3s infinite;
+  box-sizing: border-box;
+}
+
+#up {
+  position: absolute;
+  top: 55%;
+  right: 5%;
+  width: 12px;
+  height: 12px;
+  border-left: 1px solid #fff;
+  border-bottom: 1px solid #fff;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+  -webkit-animation: sdb05 3s infinite;
+  animation: sdb06 3s infinite;
   box-sizing: border-box;
 }
 
@@ -157,21 +188,33 @@ export default {
   }
 }
 
-#smallfont {
-  font-size: 14px !important;
-  line-height: 2em;
+@-webkit-keyframes sdb06 {
+  0% {
+    -webkit-transform: rotate(135deg) translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    -webkit-transform: rotate(135deg) translate(-10px, 10px);
+    opacity: 0;
+  }
 }
 
-a.highlight:hover {
-  color: #ff5b5b !important;
-  text-decoration: none !important;
-
+@keyframes sdb06 {
+  0% {
+    transform: rotate(135deg) translate(0, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(135deg) translate(-10px, 10px);
+    opacity: 0;
+  }
 }
-
-.v-application a.highlight {
-  color: rgba(255,255,255,0.5);
-}
-
 .Masthead {
   z-index: 0 !important;
 }

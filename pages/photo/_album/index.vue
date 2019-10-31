@@ -17,7 +17,6 @@ export default {
   components: {
     lazySkeleton
   },
-  layout: 'donateFooter',
   computed: {
     images () {
       const param = this.$route.params.album

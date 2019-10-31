@@ -54,6 +54,7 @@ export default {
         }
         newImg.src = this.src
         this.observer.disconnect()
+        this.$emit('load')
       }
     })
     this.observer.observe(this.$el)

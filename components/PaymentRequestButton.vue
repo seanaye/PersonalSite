@@ -17,10 +17,10 @@ import { StripeElement } from 'vue-stripe-elements-plus'
 export default {
   components: { StripeElement },
   props: {
-    stripe: {
-      type: [String, Object],
-      required: true
-    },
+    // stripe: {
+    //   type: [String, Object],
+    //   required: true
+    // },
     options: {
       type: [Object],
       required: false
