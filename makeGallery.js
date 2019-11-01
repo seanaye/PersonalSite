@@ -34,8 +34,7 @@ const make = async () => {
     }
     console.log('JSON file has been saved.')
   })
+  return gallery
 }
 
-make()
-
-
+export default make
