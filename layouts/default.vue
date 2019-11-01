@@ -23,12 +23,17 @@
       <nuxt />
     </v-content>
     <v-footer app elevation="24" color="black">
-      If you enjoy my work and would like to support me,&nbsp;<a class="highlight" @click="$router.push('/payment')">consider donating</a>.
+      <div style="word-wrap: break-word;">
+        If you enjoy my work and would like to support me,&nbsp;<a class="highlight" @click="$router.push('/payment')">consider donating</a>.
+      </div>
     </v-footer>
   </v-app>
 </template>
 
 <script>
 export default {
+  mounted () {
+    console.log(this)
+  }
 }
 </script>

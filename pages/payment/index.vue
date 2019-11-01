@@ -95,6 +95,10 @@ export default {
     CardPayment,
     BrowserPayment
   },
+  transition: {
+    name: 'fade',
+    mode: 'out-in'
+  },
   data () {
     return {
       paymentMethod: 0,

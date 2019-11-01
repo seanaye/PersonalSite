@@ -17,6 +17,10 @@ export default {
   components: {
     lazySkeleton
   },
+  transition: {
+    name: 'fade',
+    mode: 'out-in'
+  },
   computed: {
     images () {
       const param = this.$route.params.album

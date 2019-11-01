@@ -47,7 +47,7 @@
       <v-btn
         v-if="showTooltip"
         color="grey darken-4"
-        fixed
+        sticky
         bottom
         right
         v-model="showTooltip"
@@ -72,7 +72,7 @@ export default {
     appcanvas,
     lazySkeleton
   },
-  transitions: {
+  transition: {
     name: 'fade',
     mode: 'out-in'
   },
