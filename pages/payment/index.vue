@@ -16,11 +16,10 @@
              Please consider supporting me as developer and as a
              photographer by giving a small dontation.
              All donations are secure, anonymous
-             and help keep this site online :)
+             and help me keep this site online :)
             <br>
-            I accept all major payment cards, browser payments, such as Google Pay, and cryptocurrency.
             <br>
-            Thank you.
+            I accept all major payment cards, browser payments, like Google Pay, and cryptocurrency.
           </v-card-text>
           <v-card-actions>
             <v-row>
@@ -39,7 +38,7 @@
                 <v-tabs v-if="!paid" v-model="paymentMethod" background-color="grey darken-4">
                   <v-tab key="0">Card</v-tab>
                   <v-tab key="1">Browser</v-tab>
-                  <v-tab key="2">Cryptocurrency</v-tab>
+                  <v-tab key="2">Crypto</v-tab>
                   <v-tab-item
                     key="0"
                     background-color="grey darken-4"

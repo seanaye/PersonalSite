@@ -20,17 +20,27 @@
             xl="6"
           >
             <v-card color="grey darken-4">
-              <v-card-title>
-                <v-avatar size="120" class="mr-2 mr-lg-6">
-                  <img :src="require(`~/assets/Avatar.jpg`)">
-                </v-avatar>
-                About Sean Aye
-              </v-card-title>
-              <v-card-text>
-                <span id="smallfont">
-                  I'm a photographer, web developer, and student at the University of Waterloo. I'm looking for freelance photo and or video work. If you are interested in portraits, photo prints, promotional videos, or just want to get in touch, feel free to <a href="mailto:sean.aye2@gmail.com" class="highlight">email me</a>
-                </span>
-              </v-card-text>
+              <v-row justify="center">
+                <v-col cols="12" sm="4" lg="2" class="text-center">
+                  <v-avatar size="120" class="ma-md-4">
+                    <v-img :src="require('~/assets/Avatar.jpg')"></v-img>
+                  </v-avatar>
+                </v-col>
+                <v-col cols="12" sm="8" lg="10">
+                  <div>
+                    <v-card-title class="headline">
+                      About Sean Aye
+                    </v-card-title>
+                    <v-divider></v-divider>
+                    <v-card-subtitle>
+                      I'm a {{ myAge }} year old photographer, web developer, and student at the University of Waterloo. I'm looking for freelance photography, videography, or fullstack development work. If you are interested in any of these services, or just want to get in touch, feel free to <a href="mailto:sean.aye2@gmail.com" class="highlight">email me</a>.
+                      <br>
+                      <br>
+                      Please check out some of my favourite shots below.
+                    </v-card-subtitle>
+                  </div>
+                </v-col>
+              </v-row>
             </v-card>
           </v-col>
         </v-row>
@@ -93,6 +103,15 @@ export default {
   computed: {
     loadedAll () {
       return this.list.length > 0 && this.list.length === this.loaded
+    },
+    myAge () {
+      const bday = new Date('July 3, 1997')
+      const now = new Date()
+      if (now.getMonth() >= 7 && now.getDate() >= 3) {
+        return now.getFullYear() - bday.getFullYear()
+      } else {
+        return now.getFullYear() - bday.getFullYear() - 1
+      }
     }
   },
   watch: {

@@ -24,7 +24,7 @@
     </v-content>
     <v-footer v-if="showFooter" app elevation="24" color="black">
       <div style="word-wrap: break-word; font-size: small;">
-        If you enjoy my work and would like to support me,&nbsp;<a class="highlight" @click="$router.push('/payment')">consider donating</a>.
+        If you enjoy my work and would like to support me,&nbsp;<a class="highlight" @click="$router.push('/payment')">consider donating</a> it only takes 10 seconds.
       </div>
     </v-footer>
   </v-app>
