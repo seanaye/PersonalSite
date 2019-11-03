@@ -21,11 +21,14 @@
           >
             <v-card color="grey darken-4">
               <v-card-title>
-                About
+                <v-avatar size="120" class="mr-2 mr-lg-6">
+                  <img :src="require(`~/assets/Avatar.jpg`)">
+                </v-avatar>
+                About Sean Aye
               </v-card-title>
               <v-card-text>
                 <span id="smallfont">
-                  My name is Sean Aye, I'm a photographer, web developer, and student at the University of Waterloo. I'm looking for freelance photo and or video work. If you are interested in portraits, photo prints, promotional videos, or just want to get in touch, feel free to <a href="mailto:sean.aye2@gmail.com" class="highlight">email me</a>
+                  I'm a photographer, web developer, and student at the University of Waterloo. I'm looking for freelance photo and or video work. If you are interested in portraits, photo prints, promotional videos, or just want to get in touch, feel free to <a href="mailto:sean.aye2@gmail.com" class="highlight">email me</a>
                 </span>
               </v-card-text>
             </v-card>
