@@ -36,7 +36,7 @@
                 />
               </v-col>
               <v-col cols="12">
-                <v-tabs v-model="paymentMethod" background-color="grey darken-4">
+                <v-tabs v-if="!paid" v-model="paymentMethod" background-color="grey darken-4">
                   <v-tab key="0">Card</v-tab>
                   <v-tab key="1">Browser</v-tab>
                   <v-tab key="2">Cryptocurrency</v-tab>
@@ -56,6 +56,7 @@
                         }
                       }"
                       :amount="Number(amount)"
+                      @paid="paid = true"
                     />
                   </v-tab-item>
                   <v-tab-item
@@ -63,7 +64,10 @@
                     background-color="grey darken-4"
                     style="margin-top: 20px;"
                   >
-                    <BrowserPayment :value="Number(amount)"></BrowserPayment>
+                    <BrowserPayment
+                      :value="Number(amount)"
+                      @paid="paid = true"
+                    ></BrowserPayment>
                   </v-tab-item>
                   <v-tab-item key="2">
                     <div style="margin-top: 10px; margin-bottom: 10px;">
@@ -77,6 +81,7 @@
                     </div>
                   </v-tab-item>
                 </v-tabs>
+                <div v-if="paid">Payment complete! Thank You.</div>
               </v-col>
             </v-row>
           </v-card-actions>
@@ -102,7 +107,8 @@ export default {
   data () {
     return {
       paymentMethod: 0,
-      amount: 5
+      amount: 5,
+      paid: false
     }
   },
   methods: {

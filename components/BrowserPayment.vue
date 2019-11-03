@@ -12,7 +12,8 @@
       :message="status"
       :complete="complete"
       :success="success"
-      :timeout="1000"
+      :timeout="1500"
+      @hidden="done"
     ></ProcessingModal>
   </div>
 </template>
@@ -109,6 +110,11 @@ export default {
       })
       this.canMakePayment = await req.canMakePayment()
       this.paymentReqObj = req
+    },
+    done () {
+      if (this.success) {
+        this.$emit('paid')
+      }
     }
   }
 }

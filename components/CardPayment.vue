@@ -5,7 +5,8 @@
       :message="status"
       :complete="complete"
       :success="success"
-      :timeout="1000"
+      :timeout="1500"
+      @hidden="done"
     ></ProcessingModal>
     <v-col cols="12">
       <card
@@ -106,6 +107,11 @@ export default {
           this.success = true
           this.status = 'Payment complete!'
         }
+      }
+    },
+    done () {
+      if (this.success) {
+        this.$emit('paid')
       }
     }
   },

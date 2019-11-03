@@ -39,7 +39,8 @@ export default {
       setTimeout(() => {
         console.log('set shown to false')
         this.shown = false
-      }, this.timeout)
+        this.$emit('hidden')
+      }, Number(this.timeout))
     }
   }
 }

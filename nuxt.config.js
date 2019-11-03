@@ -7,6 +7,7 @@ import { VuetifyProgressiveModule } from 'vuetify-loader'
 
 const initNuxt = async () => { 
   const gallery = await makeGallery()
+  console.log(gallery)
   return {
     mode: 'spa',
     env: {
