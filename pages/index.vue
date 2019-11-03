@@ -47,12 +47,12 @@
       <v-btn
         v-if="showTooltip"
         color="grey darken-4"
-        sticky
+        fixed
         bottom
         right
         v-model="showTooltip"
         elevation="24"
-        style="margin-bottom: 20px;"
+        class="mb-12 mb-sm-10 mb-md-8 mb-lg-4"
         @click="$router.push('/photo')"
       >
         View More

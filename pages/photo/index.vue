@@ -51,9 +51,6 @@ export default {
         { title: 'Jasper', src: 'jasper/Jasper-6.jpg', link: 'jasper' }
       ]
     }
-  },
-  mounted () {
-    console.log(this.$root)
   }
 }
 </script>
