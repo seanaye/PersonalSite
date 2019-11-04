@@ -167,21 +167,6 @@ export default {
   box-sizing: border-box;
 }
 
-#up {
-  position: absolute;
-  top: 55%;
-  right: 5%;
-  width: 12px;
-  height: 12px;
-  border-left: 1px solid #fff;
-  border-bottom: 1px solid #fff;
-  -webkit-transform: rotate(45deg);
-  transform: rotate(45deg);
-  -webkit-animation: sdb05 3s infinite;
-  animation: sdb06 3s infinite;
-  box-sizing: border-box;
-}
-
 @-webkit-keyframes sdb05 {
   0% {
     -webkit-transform: rotate(-45deg) translate(0, 0);
@@ -210,33 +195,6 @@ export default {
   }
 }
 
-@-webkit-keyframes sdb06 {
-  0% {
-    -webkit-transform: rotate(135deg) translate(0, 0);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    -webkit-transform: rotate(135deg) translate(-10px, 10px);
-    opacity: 0;
-  }
-}
-
-@keyframes sdb06 {
-  0% {
-    transform: rotate(135deg) translate(0, 0);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: rotate(135deg) translate(-10px, 10px);
-    opacity: 0;
-  }
-}
 .Masthead {
   z-index: 0 !important;
 }
