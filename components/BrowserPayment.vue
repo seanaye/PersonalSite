@@ -29,7 +29,9 @@ export default {
     ProcessingModal
   },
   props: {
-    value: Number
+    value: Number,
+    getname: { type: Boolean, default: false },
+    desc: { type: String, required: true }
   },
   data () {
     return {
@@ -65,36 +67,46 @@ export default {
           amount: this.value * 100,
           label: 'Donation Amount'
         },
-        requestPayerName: false,
+        requestPayerName: this.getname,
         requestPayerEmail: false
       }).on('token', async (obj) => {
         this.showOverlay = true
         this.status = 'Processing payment token'
         console.log(obj)
-        const r = await this.$axios.post(this.$root.context.env.APIEndpoint, {
-          query: `mutation donation(
-            $token: String!
-            $name: String!
-            $amount: Int!
-            $live: Boolean!
-          ) {
-            payment (
-              token: $token
-              name: $name
-              amount: $amount
-              desc: "SEAN AYE DONATION"
-              live: $live
-            )
-          }`,
-          variables: {
-            token: obj.token.id,
-            name: 'Anonymous',
-            amount: this.value * 100,
-            live: obj.token.livemode
-          }
-        })
+        let r = ''
+        try {
+          r = await this.$axios.post(this.$root.context.env.APIEndpoint, {
+            query: `mutation donation(
+              $token: String!
+              $name: String!
+              $amount: Int!
+              $live: Boolean!
+            ) {
+              payment (
+                token: $token
+                name: $name
+                amount: $amount
+                desc: $desc
+                live: $live
+              )
+            }`,
+            variables: {
+              token: obj.token.id,
+              name: (this.getname) ? obj.payerName : 'Anonymous',
+              amount: this.value * 100,
+              live: obj.token.livemode,
+              desc: this.desc
+            }
+          })
+        } catch (error) {
+          console.log(error)
+          obj.complete('fail')
+          this.success = false
+          this.complete = true
+          this.status = 'Error processing payment'
+        }
         console.log(r)
-        if (!r.data.errors) {
+        if (r && !r.data.errors) {
           console.log('success')
           obj.complete('success')
           this.complete = true

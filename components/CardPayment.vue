@@ -8,6 +8,16 @@
       :timeout="1500"
       @hidden="done"
     ></ProcessingModal>
+    <v-col cols="12" v-if="getname">
+      <v-text-field
+        v-model="name"
+        outlined
+        type="text"
+        label="Name"
+        placeholder="Enter your name"
+      >
+      </v-text-field>
+    </v-col>
     <v-col cols="12">
       <card
         ref="card"
@@ -40,7 +50,9 @@ export default {
   },
   props: {
     options: Object,
-    amount: Number
+    amount: Number,
+    getname: { type: Boolean, default: false },
+    desc: { type: String, required: true }
   },
   data () {
     return {
@@ -48,7 +60,8 @@ export default {
       success: false,
       validCard: false,
       showOverlay: false,
-      status: ''
+      status: '',
+      name: ''
     }
   },
   methods: {
@@ -80,22 +93,25 @@ export default {
             $name: String!
             $amount: Int!
             $live: Boolean!
+            $desc: String!
           ) {
             payment (
               token: $token
               name: $name
               amount: $amount
-              desc: "Donation"
+              desc: $desc
               live: $live
             )
           }`,
           variables: {
             token: t.token.id,
-            name: 'anonymous',
+            name: this.name || 'anonymous',
             amount: this.amount * 100,
-            live: t.token.livemode
+            live: t.token.livemode,
+            desc: this.desc
           }
         })
+        console.log(r)
         const stripeResp = JSON.parse(r.data.data.payment)
         console.log(stripeResp)
         if (r.data.errors || !stripeResp.paid) {
@@ -126,7 +142,8 @@ export default {
       }
     },
     btnDisabled () {
-      return !this.validCard || this.complete || !(this.amount)
+      const cardNotOK = !this.validCard || this.complete || !(this.amount)
+      return (this.getname) ? cardNotOK || !this.name : cardNotOK
     }
   }
 }
