@@ -81,6 +81,7 @@ export default {
               $name: String!
               $amount: Int!
               $live: Boolean!
+              $desc: String!
             ) {
               payment (
                 token: $token
