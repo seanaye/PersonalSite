@@ -112,7 +112,7 @@ export default {
     return {
       paymentMethod: 0,
       paid: false,
-      convRate: 0,
+      convRate: 0.7578,
       iPaid: 3538,
       numPpl: 19
     }
