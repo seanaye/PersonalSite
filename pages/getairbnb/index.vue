@@ -43,8 +43,12 @@
               </v-col>
               <v-col cols="12">
                 <v-tabs v-if="!paid" v-model="paymentMethod" background-color="grey darken-4">
-                  <v-tab key="0">Card</v-tab>
-                  <v-tab key="1">Browser</v-tab>
+                  <v-tab key="0">
+                    Card
+                  </v-tab>
+                  <v-tab key="1">
+                    Browser
+                  </v-tab>
                   <v-tab-item
                     key="0"
                     background-color="grey darken-4"
@@ -61,9 +65,9 @@
                         }
                       }"
                       :amount="Number(amount)"
-                      @paid="paid = true"
                       getname
                       desc="Pooling AirBnB Money"
+                      @paid="paid = true"
                     />
                   </v-tab-item>
                   <v-tab-item
@@ -73,13 +77,15 @@
                   >
                     <BrowserPayment
                       :value="Number(amount)"
-                      @paid="paid = true"
                       getname
                       desc="Pooling AirBnB Money"
-                    ></BrowserPayment>
+                      @paid="paid = true"
+                    />
                   </v-tab-item>
                 </v-tabs>
-                <div v-if="paid">Payment complete! Thank You.</div>
+                <div v-if="paid">
+                  Payment complete! Thank You.
+                </div>
               </v-col>
             </v-row>
           </v-card-actions>
@@ -102,10 +108,6 @@ export default {
     name: 'fade',
     mode: 'out-in'
   },
-  async created () {
-    const r = await this.$axios.get('https://api.exchangeratesapi.io/latest?symbols=USD,CAD&base=CAD')
-    this.convRate = r.data.rates.USD
-  },
   data () {
     return {
       paymentMethod: 0,
@@ -113,11 +115,6 @@ export default {
       convRate: 0,
       iPaid: 3538,
       numPpl: 19
-    }
-  },
-  methods: {
-    validAmount (int) {
-      return (int > 0) ? true : 'Enter an amount higher than 0'
     }
   },
   computed: {
@@ -129,6 +126,18 @@ export default {
     },
     amount () {
       return Math.ceil(this.txFee / this.numPpl)
+    }
+  },
+  created () {
+    this.getExchange()
+  },
+  methods: {
+    validAmount (int) {
+      return (int > 0) ? true : 'Enter an amount higher than 0'
+    },
+    async getExchange () {
+      const r = await this.$axios.get('https://api.exchangeratesapi.io/latest?symbols=USD,CAD&base=CAD')
+      this.convRate = r.data.rates.USD
     }
   }
 }
