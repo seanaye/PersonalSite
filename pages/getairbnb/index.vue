@@ -14,13 +14,13 @@
           <v-card-text>
             <v-row justify-content-center>
               <v-col cols="12">
-                Price breakdown: I was charged $3400 CAD for booking the AirBnB but I can only accpet payments in USD.
+                Price breakdown: I was charged $3400 CAD for booking the AirBnB and $138 CAD for booking the club, $3538 total, but I can only accpet payments in USD.
               </v-col>
               <v-col cols="12">
                 The current exchange rate from CAD to USD is $1 CAD >> ${{ Math.round(convRate * 10000) / 10000 }} USD. This means im owed ${{ Math.round(USD * 100) / 100 }} USD.
               </v-col>
               <v-col cols="12">
-                My payment processor takes 2.9% in transaction fees (this is still less than paypal). This means in total people need to pay me ${{ Math.round(txFee * 100) / 100 }} USD.
+                My payment processor takes 2.9% in transaction fees (less than paypal). This means in total people need to pay me ${{ Math.round(txFee * 100) / 100 }} USD.
               </v-col>
               <v-col cols="12">
                 Assuming we have {{ numPpl }} people. Everyone needs to pay ${{ Math.round(amount * 100) / 100 }} USD, rounded up to nearest dollar.
@@ -111,7 +111,7 @@ export default {
       paymentMethod: 0,
       paid: false,
       convRate: 0,
-      iPaid: 3400,
+      iPaid: 3538,
       numPpl: 19
     }
   },
