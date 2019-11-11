@@ -12,7 +12,20 @@
             Pool money for AirBnB
           </v-card-title>
           <v-card-text>
-            I just checked and the total is 272,842 yen which is almost exactly 2500 USD (give or take $3). Divided by 17 people is $147 USD. Plz send money so I can pay for it. I can take direct card payments or browser payments like google pay.
+            <v-row justify-content-center>
+              <v-col cols="12">
+                Price breakdown: I was charged $3400 CAD for booking the AirBnB but I can only accpet payments in USD.
+              </v-col>
+              <v-col cols="12">
+                The current exchange rate from CAD to USD is $1 CAD >> ${{ Math.round(convRate * 10000) / 10000 }} USD. This means im owed ${{ Math.round(USD * 100) / 100 }} USD.
+              </v-col>
+              <v-col cols="12">
+                My payment processor takes 2.9% in transaction fees (this is still less than paypal). This means in total people need to pay me ${{ Math.round(txFee * 100) / 100 }} USD.
+              </v-col>
+              <v-col cols="12">
+                Assuming we have {{ numPpl }} people. Everyone needs to pay ${{ Math.round(amount * 100) / 100 }} USD, rounded up to nearest dollar.
+              </v-col>
+            </v-row>
           </v-card-text>
           <v-card-actions>
             <v-row>
@@ -89,16 +102,33 @@ export default {
     name: 'fade',
     mode: 'out-in'
   },
+  async created () {
+    const r = await this.$axios.get('https://api.exchangeratesapi.io/latest?symbols=USD,CAD&base=CAD')
+    this.convRate = r.data.rates.USD
+  },
   data () {
     return {
       paymentMethod: 0,
-      amount: 147,
-      paid: false
+      paid: false,
+      convRate: 0,
+      iPaid: 3400,
+      numPpl: 19
     }
   },
   methods: {
     validAmount (int) {
       return (int > 0) ? true : 'Enter an amount higher than 0'
+    }
+  },
+  computed: {
+    USD () {
+      return this.iPaid * Number(this.convRate)
+    },
+    txFee () {
+      return this.USD * 1.029
+    },
+    amount () {
+      return Math.ceil(this.txFee / this.numPpl)
     }
   }
 }
